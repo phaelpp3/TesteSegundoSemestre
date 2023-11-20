@@ -1,0 +1,14 @@
+import UserController from "../controllers/UserController";
+import { Router } from "express";
+
+const UserRouter = Router();
+
+UserRouter.get('/usuarios', UserController.listUsers)
+
+UserRouter.post('/usuarios', UserController.createUser);
+
+UserRouter.put('/usuarios', UserController.updateUser);
+
+UserRouter.delete('/usuarios', UserController.deleteUser);
+
+export default UserRouter;

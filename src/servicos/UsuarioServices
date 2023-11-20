@@ -1,0 +1,73 @@
+import { Prisma, PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+class UserService {
+    constructor(){
+
+    }
+
+    async listUsers(id?: string){
+        try{
+            if(id){
+                const usuario = await prisma.user.findUnique({
+                    where: {
+                        id
+                    }
+                });
+                return usuario;
+            }else{
+                const usuario = await prisma.user.findMany();
+                return usuario;
+            }
+        }catch(error){
+            console.log(error);
+            return null;
+        }
+    }
+
+    async criarUsuario(user: Prisma.UserCreateInput){
+        try{
+            const novousuario = await prisma.usuario.create({
+                data: user
+            });
+            return novousuario;
+        }catch(error){
+            console.log(error);
+            return null;
+        }
+    }
+
+    async updateusuario(id: string, user: Prisma.UserUpdateInput){
+        try{
+            const updatedusuario = await prisma.usuario.update({
+                where: {
+                    id
+                },
+                data: user
+            });
+
+            return updatedusuario;
+        }catch(error){
+            console.log(error);
+            return null;
+        }
+    }
+
+    async deletarusuario(id: string){
+        try{
+            const deleteduauario = await prisma.usuario.delete({
+                where: {
+                    id
+                }
+            });
+
+            return deleteduauario;
+        }catch(error){
+            console.log(error);
+            return null;
+        }
+    }
+}
+
+export default new UserService();
